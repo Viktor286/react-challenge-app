@@ -1,4 +1,6 @@
+import { useCallback, useState } from 'react';
 import ConditionRuleLayout from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRule';
+import { ConditionRuleSkeletonSolid } from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRuleSkeleton';
 import createConditionRule, { IConditionRule } from '../../../Features/createConditionRule';
 
 interface IConditionRuleProp {
@@ -12,6 +14,10 @@ export default function ConditionRule({
   currentConditionGroupIndex = 0,
   currentConditionRuleIndex = 0,
 }: IConditionRuleProp) {
+  const [isItemSkeletonVisible, setIsItemSkeletonVisible] = useState(false);
+  const showItemSkeleton = useCallback(() => setIsItemSkeletonVisible(true), []);
+  const hideItemSkeleton = useCallback(() => setIsItemSkeletonVisible(false), []);
+
   const actions = {
     onConditionSelect: () => console.log('onConditionSelect'),
     onOperatorSelect: () => console.log('onOperatorSelect'),
@@ -30,9 +36,12 @@ export default function ConditionRule({
           conditionRule,
           actions: {
             ...actions,
+            onMouseEnterAddConditionRuleButton: showItemSkeleton,
+            onMouseLeaveAddConditionRuleButton: hideItemSkeleton,
           },
         }}
       />
+      {isItemSkeletonVisible && <ConditionRuleSkeletonSolid />}
     </>
   );
 }
