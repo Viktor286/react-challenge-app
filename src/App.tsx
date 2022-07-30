@@ -1,5 +1,5 @@
 import React from 'react';
-import { store } from './Features/reduxStore';
+import { store } from './Features/Redux/store';
 import { Provider as ReduxProvider } from 'react-redux';
 import MainPage from './Components/MainPage';
 import InputDataUrl from './Components/InputDataUrl';

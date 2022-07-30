@@ -1,5 +1,4 @@
 import { generateId } from '../utils';
-import { conditionOptions } from './tempConditionOptions';
 
 export interface IConditionRule {
   condition: string;
@@ -8,7 +7,7 @@ export interface IConditionRule {
   id: string;
 }
 
-export default function createConditionRule(): IConditionRule {
+export default function createConditionRule(conditionOptions: string[] = []): IConditionRule {
   return {
     condition: conditionOptions[0],
     operator: 0,

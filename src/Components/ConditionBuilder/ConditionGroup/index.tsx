@@ -1,3 +1,4 @@
+import React from 'react';
 import ConditionRule from '../ConditionRule';
 import ConditionGroupLayout from '../../../Layouts/ConditionBuilder/ConditionGroup/ConditionGroup';
 import { ConditionRuleSkeleton } from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRuleSkeleton';
@@ -8,7 +9,10 @@ interface IConditionGroupProps {
   currentConditionGroupIndex: number;
 }
 
-export default function ConditionGroup({ conditionGroup, currentConditionGroupIndex }: IConditionGroupProps) {
+export default React.memo(function ConditionGroup({
+  conditionGroup,
+  currentConditionGroupIndex,
+}: IConditionGroupProps) {
   const { rules: conditionRules = [] } = conditionGroup;
   const isLoading = false;
 
@@ -26,4 +30,4 @@ export default function ConditionGroup({ conditionGroup, currentConditionGroupIn
       )}
     </ConditionGroupLayout>
   );
-}
+});

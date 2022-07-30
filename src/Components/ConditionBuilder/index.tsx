@@ -1,13 +1,17 @@
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../Features/Redux/hooks';
+import { addConditionGroup } from '../../Features/Redux/conditionsSlice';
 import ConditionGroup from './ConditionGroup';
 import AddConditionGroupLayout from '../../Layouts/ConditionBuilder/ConditionGroup/AddConditionGroup';
 import ConditionGroupSeparatorLayout from '../../Layouts/ConditionBuilder/ConditionGroup/ConditionGroupSeparator';
-import createConditionGroup from '../../Features/createConditionGroup';
 
 export default function ConditionBuilder() {
-  const conditions = { groups: [createConditionGroup()] };
+  const dispatch = useAppDispatch();
+  const conditions = useAppSelector((state) => state.conditions);
 
-  const onAddConditionGroup = () => console.log('onAddConditionGroup');
+  const onAddConditionGroup = () => {
+    dispatch(addConditionGroup());
+  };
 
   return (
     <>
@@ -17,7 +21,7 @@ export default function ConditionBuilder() {
           <ConditionGroup conditionGroup={conditionGroup} currentConditionGroupIndex={index} />
         </React.Fragment>
       ))}
-      <AddConditionGroupLayout onAddCondition={onAddConditionGroup} />
+      <AddConditionGroupLayout withBar={conditions.groups.length > 0} onAddCondition={onAddConditionGroup} />
     </>
   );
 }

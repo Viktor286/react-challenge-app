@@ -3,13 +3,17 @@ import { Add } from '@mui/icons-material';
 import { ConditionGroupSeparatorBarSx, ConditionGroupSeparatorBoxSx } from './ConditionGroupSeparator';
 
 interface IAddConditionGroupLayout {
+  withBar: boolean;
   onAddCondition: () => void;
 }
 
-export default function AddConditionGroupLayout({ onAddCondition }: IAddConditionGroupLayout) {
+export default function AddConditionGroupLayout({
+  withBar = true,
+  onAddCondition = () => {},
+}: IAddConditionGroupLayout) {
   return (
     <Box sx={ConditionGroupSeparatorBoxSx}>
-      <Box sx={ConditionGroupSeparatorBarSx} />
+      {withBar && <Box sx={ConditionGroupSeparatorBarSx} />}
       <Button
         fullWidth
         size="large"

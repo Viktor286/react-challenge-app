@@ -1,7 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import ConditionRuleLayout from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRule';
 import { ConditionRuleSkeletonSolid } from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRuleSkeleton';
 import createConditionRule, { IConditionRule } from '../../../Features/createConditionRule';
+import { useAppDispatch, useAppSelector } from '../../../Features/Redux/hooks';
+import {
+  updateConditionRule,
+  addConditionRule,
+  removeConditionRule,
+  removeConditionGroup,
+} from '../../../Features/Redux/conditionsSlice';
 
 interface IConditionRuleProp {
   conditionRule: IConditionRule;
@@ -14,17 +21,56 @@ export default function ConditionRule({
   currentConditionGroupIndex = 0,
   currentConditionRuleIndex = 0,
 }: IConditionRuleProp) {
+  const dispatch = useAppDispatch();
+  const conditionGroup = useAppSelector((state) => state.conditions.groups[currentConditionGroupIndex]);
+
   const [isItemSkeletonVisible, setIsItemSkeletonVisible] = useState(false);
   const showItemSkeleton = useCallback(() => setIsItemSkeletonVisible(true), []);
   const hideItemSkeleton = useCallback(() => setIsItemSkeletonVisible(false), []);
 
-  const actions = {
-    onConditionSelect: () => console.log('onConditionSelect'),
-    onOperatorSelect: () => console.log('onOperatorSelect'),
-    onOperandChange: () => console.log('onOperandChange'),
-    onAddConditionRuleButton: () => console.log('onAddConditionRuleButton'),
-    onRemoveConditionRuleButton: () => console.log('onRemoveConditionRuleButton'),
-  };
+  const actions = useMemo(
+    () => ({
+      onConditionSelect: (fieldValue: string, conditionGroupIndex: number, conditionRuleIndex: number) => {
+        dispatch(
+          updateConditionRule({
+            conditionRuleIndex,
+            conditionGroupIndex,
+            fieldName: 'condition',
+            fieldValue,
+          }),
+        );
+      },
+
+      onOperatorSelect: (fieldValue: string, conditionGroupIndex: number, conditionRuleIndex: number) => {
+        dispatch(
+          updateConditionRule({ conditionRuleIndex, conditionGroupIndex, fieldName: 'operator', fieldValue }),
+        );
+      },
+
+      onOperandChange: (fieldValue: string, conditionGroupIndex: number, conditionRuleIndex: number) => {
+        dispatch(
+          updateConditionRule({ conditionRuleIndex, conditionGroupIndex, fieldName: 'operand', fieldValue }),
+        );
+      },
+
+      onAddConditionRuleButton: (conditionGroupIndex: number, conditionRuleIndex: number) => {
+        dispatch(addConditionRule({ conditionGroupIndex, conditionRuleIndex }));
+        hideItemSkeleton();
+      },
+
+      onRemoveConditionRuleButton: (conditionGroupIndex: number, conditionRuleIndex: number) => {
+        if (conditionGroup.rules.length <= 1) {
+          dispatch(removeConditionGroup({ conditionGroupIndex }));
+        } else {
+          dispatch(removeConditionRule({ conditionGroupIndex, conditionRuleIndex }));
+        }
+      },
+
+      onMouseEnterAddConditionRuleButton: showItemSkeleton,
+      onMouseLeaveAddConditionRuleButton: hideItemSkeleton,
+    }),
+    [dispatch, hideItemSkeleton, showItemSkeleton, conditionGroup],
+  );
 
   return (
     <>
@@ -34,11 +80,7 @@ export default function ConditionRule({
           currentConditionRuleIndex,
           currentConditionGroupIndex,
           conditionRule,
-          actions: {
-            ...actions,
-            onMouseEnterAddConditionRuleButton: showItemSkeleton,
-            onMouseLeaveAddConditionRuleButton: hideItemSkeleton,
-          },
+          actions,
         }}
       />
       {isItemSkeletonVisible && <ConditionRuleSkeletonSolid />}

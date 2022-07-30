@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import conditionsReducer from '../Features/conditionsSlice';
+import conditionsReducer from './conditionsSlice';
 
 export const store = configureStore({
   reducer: {

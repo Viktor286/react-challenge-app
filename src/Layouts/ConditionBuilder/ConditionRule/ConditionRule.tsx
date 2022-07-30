@@ -31,7 +31,7 @@ interface IConditionRuleLayoutProps {
   actions: any; // TODO: fill
 }
 
-export default function ConditionRuleLayout({
+export default React.memo(function ConditionRuleLayout({
   conditionRule = { condition: '', operator: 0, operand: '', id: '' },
   currentConditionGroupIndex = 0,
   currentConditionRuleIndex = 0,
@@ -102,4 +102,4 @@ export default function ConditionRuleLayout({
       </Box>
     </Box>
   );
-}
+});

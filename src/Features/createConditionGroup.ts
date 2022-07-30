@@ -3,12 +3,12 @@ import createConditionRule, { IConditionRule } from './createConditionRule';
 
 export interface IConditionGroup {
   id: string;
-  rules: IConditionRule[];
+  rules: Array<IConditionRule>;
 }
 
-export default function createConditionGroup(): IConditionGroup {
+export default function createConditionGroup(conditionOptions: string[] = []): IConditionGroup {
   return {
     id: generateId(),
-    rules: [createConditionRule()],
+    rules: [createConditionRule(conditionOptions)],
   };
 }
