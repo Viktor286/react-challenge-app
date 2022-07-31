@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import createConditionGroup, { IConditionGroup } from '../createConditionGroup';
 import createConditionRule, { IConditionRule } from '../createConditionRule';
-import { conditionOptions } from '../tempConditionOptions';
 
 interface IConditionsState {
   groups: IConditionGroup[];
-  options: string[];
-  // loadState: 0 // 0 not, 1 in-progress, 3 loaded
 }
 
 interface IUpdateConditionRuleAction {
@@ -19,29 +16,34 @@ interface IUpdateConditionRuleAction {
   };
 }
 
+export const initialState = {
+  groups: [createConditionGroup([''])],
+};
+
 export const conditionsSlice = createSlice({
   name: 'conditions',
 
-  initialState: {
-    groups: [createConditionGroup(conditionOptions)],
-    options: conditionOptions,
-    // loadState: 0 // 0 not, 1 in-progress, 3 loaded
-  } as IConditionsState,
+  initialState: initialState as IConditionsState,
 
   reducers: {
-    addConditionGroup: (state) => {
-      state.groups.push(createConditionGroup(state.options));
+    resetConditionGroups: (state, { payload: conditionOptions }) => {
+      state.groups = [createConditionGroup(conditionOptions)];
+    },
+
+    addConditionGroup: (state, { payload: conditionOptions }) => {
+      console.log('addConditionGroup with ', conditionOptions);
+      state.groups.push(createConditionGroup(conditionOptions));
     },
 
     removeConditionGroup: (state, { payload: { conditionGroupIndex } }) => {
       state.groups.splice(conditionGroupIndex, 1);
     },
 
-    addConditionRule: (state, { payload: { conditionGroupIndex, conditionRuleIndex } }) => {
+    addConditionRule: (state, { payload: { conditionGroupIndex, conditionRuleIndex, conditionOptions } }) => {
       state.groups[conditionGroupIndex].rules.splice(
         conditionRuleIndex + 1,
         0,
-        createConditionRule(state.options),
+        createConditionRule(conditionOptions),
       );
     },
 
@@ -67,6 +69,7 @@ export const {
   addConditionRule,
   removeConditionRule,
   updateConditionRule,
+  resetConditionGroups,
 } = conditionsSlice.actions;
 
 export default conditionsSlice.reducer;

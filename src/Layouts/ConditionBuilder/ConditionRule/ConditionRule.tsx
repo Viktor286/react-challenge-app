@@ -5,7 +5,6 @@ import ConditionRuleDropdown from './ConditionRuleDropdown';
 import { AddConditionRuleButton, RemoveConditionRuleButton } from './ConditionRuleButtons';
 import operatorOptions from '../../../Features/operatorOptions';
 import { IConditionRule } from '../../../Features/createConditionRule';
-import { conditionOptions } from '../../../Features/tempConditionOptions';
 
 // Styles could be consolidated into theme tokens
 export const conditionRuleHeight = '55px';
@@ -21,11 +20,12 @@ export const ConditionRuleLayoutSx = {
 export const conditionRuleSx = {
   flex: 1,
   width: 1,
-  height: 1,
+  minHeight: conditionRuleHeight,
 };
 
 interface IConditionRuleLayoutProps {
   conditionRule: IConditionRule;
+  dropdownOptions: string[];
   currentConditionGroupIndex: number;
   currentConditionRuleIndex: number;
   actions: any; // TODO: fill
@@ -33,17 +33,15 @@ interface IConditionRuleLayoutProps {
 
 export default React.memo(function ConditionRuleLayout({
   conditionRule = { condition: '', operator: 0, operand: '', id: '' },
+  dropdownOptions,
   currentConditionGroupIndex = 0,
   currentConditionRuleIndex = 0,
   actions = {},
 }: IConditionRuleLayoutProps) {
-  const { condition, operator, operand } = conditionRule;
-
-  // TODO: validation:
-  //  1. For comparison operators (Greater Than, Less Than), the entered value must be number. Visually indicate this invalid input value.
+  const { condition, operator, operand, id } = conditionRule;
 
   return (
-    <Box sx={ConditionRuleLayoutSx}>
+    <Box sx={ConditionRuleLayoutSx} data-test-id={`condition-rule-${id}`}>
       {currentConditionRuleIndex ? (
         <Typography color="primary" fontWeight="bold" fontSize={20} mx={2}>
           OR
@@ -53,7 +51,7 @@ export default React.memo(function ConditionRuleLayout({
       <ConditionRuleDropdown
         labelId="left-condition"
         label="Left Condition"
-        dropdownOptions={conditionOptions}
+        dropdownOptions={dropdownOptions}
         selectedValue={condition}
         onSelect={(e: SelectChangeEvent) =>
           actions.onConditionSelect(e.target.value, currentConditionGroupIndex, currentConditionRuleIndex)
@@ -82,6 +80,7 @@ export default React.memo(function ConditionRuleLayout({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             actions.onOperandChange(e.target.value, currentConditionGroupIndex, currentConditionRuleIndex)
           }
+          data-test-id="input-operand"
           // error={boolean}
         />
       </FormControl>

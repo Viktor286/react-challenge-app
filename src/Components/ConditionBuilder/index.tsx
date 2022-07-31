@@ -8,9 +8,10 @@ import ConditionGroupSeparatorLayout from '../../Layouts/ConditionBuilder/Condit
 export default function ConditionBuilder() {
   const dispatch = useAppDispatch();
   const conditions = useAppSelector((state) => state.conditions);
-
+  const { dataKeys, isLoading } = useAppSelector((state) => state.dataTable);
+  console.log('conditions', conditions);
   const onAddConditionGroup = () => {
-    dispatch(addConditionGroup());
+    dispatch(addConditionGroup({ conditionOptions: dataKeys }));
   };
 
   return (
@@ -18,7 +19,11 @@ export default function ConditionBuilder() {
       {conditions.groups.map((conditionGroup, index) => (
         <React.Fragment key={conditionGroup.id}>
           {index ? <ConditionGroupSeparatorLayout /> : null}
-          <ConditionGroup conditionGroup={conditionGroup} currentConditionGroupIndex={index} />
+          <ConditionGroup
+            conditionGroup={conditionGroup}
+            currentConditionGroupIndex={index}
+            isLoading={isLoading}
+          />
         </React.Fragment>
       ))}
       <AddConditionGroupLayout withBar={conditions.groups.length > 0} onAddCondition={onAddConditionGroup} />

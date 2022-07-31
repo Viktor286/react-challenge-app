@@ -22,6 +22,7 @@ export default function ConditionRule({
   currentConditionRuleIndex = 0,
 }: IConditionRuleProp) {
   const dispatch = useAppDispatch();
+  const dataKeys = useAppSelector((state) => state.dataTable.dataKeys);
   const conditionGroup = useAppSelector((state) => state.conditions.groups[currentConditionGroupIndex]);
 
   const [isItemSkeletonVisible, setIsItemSkeletonVisible] = useState(false);
@@ -54,7 +55,7 @@ export default function ConditionRule({
       },
 
       onAddConditionRuleButton: (conditionGroupIndex: number, conditionRuleIndex: number) => {
-        dispatch(addConditionRule({ conditionGroupIndex, conditionRuleIndex }));
+        dispatch(addConditionRule({ conditionGroupIndex, conditionRuleIndex, conditionOptions: dataKeys }));
         hideItemSkeleton();
       },
 
@@ -69,7 +70,7 @@ export default function ConditionRule({
       onMouseEnterAddConditionRuleButton: showItemSkeleton,
       onMouseLeaveAddConditionRuleButton: hideItemSkeleton,
     }),
-    [dispatch, hideItemSkeleton, showItemSkeleton, conditionGroup],
+    [dispatch, hideItemSkeleton, showItemSkeleton, conditionGroup, dataKeys],
   );
 
   return (
@@ -80,6 +81,7 @@ export default function ConditionRule({
           currentConditionRuleIndex,
           currentConditionGroupIndex,
           conditionRule,
+          dropdownOptions: dataKeys,
           actions,
         }}
       />

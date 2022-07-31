@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import conditionsReducer from './conditionsSlice';
+import dataTableReducer from './dataTableSlice';
 
 export const store = configureStore({
   reducer: {
     conditions: conditionsReducer,
+    dataTable: dataTableReducer,
   },
 });
 

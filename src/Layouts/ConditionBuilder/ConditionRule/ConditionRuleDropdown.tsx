@@ -21,7 +21,13 @@ export default function ConditionRuleDropdownLayout({
   return (
     <FormControl sx={conditionRuleSx}>
       <InputLabel id={labelId}>{label}</InputLabel>
-      <Select labelId={labelId} label={label} value={selectedValue} onChange={onSelect}>
+      <Select
+        labelId={labelId}
+        label={label}
+        value={selectedValue}
+        onChange={onSelect}
+        data-test-id={`select-${labelId}`}
+      >
         {dropdownOptions.map((optionText) => (
           <MenuItem key={`key-${optionText}`} value={optionText}>
             {optionText}

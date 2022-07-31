@@ -7,17 +7,18 @@ import { IConditionGroup } from '../../../Features/createConditionGroup';
 interface IConditionGroupProps {
   conditionGroup: IConditionGroup;
   currentConditionGroupIndex: number;
+  isLoading: boolean;
 }
 
 export default React.memo(function ConditionGroup({
   conditionGroup,
   currentConditionGroupIndex,
+  isLoading,
 }: IConditionGroupProps) {
   const { rules: conditionRules = [] } = conditionGroup;
-  const isLoading = false;
 
   return (
-    <ConditionGroupLayout>
+    <ConditionGroupLayout currentConditionGroupIndex={currentConditionGroupIndex}>
       {isLoading ? (
         <ConditionRuleSkeleton />
       ) : (
