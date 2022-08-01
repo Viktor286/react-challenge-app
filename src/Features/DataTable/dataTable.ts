@@ -1,31 +1,34 @@
-import { IConditionGroup } from './createConditionGroup';
-import { IDataTable } from './dataTable';
-import operatorOptions from './operatorOptions';
+import operatorOptions from '../defaultSettings';
+import { IConditionGroup } from '../Condition/conditionGroup';
+import { parseCondition } from '../Condition/parseCondition';
 
-function parseCondition(leftOperand: string, operator: typeof operatorOptions[number], rightOperand: string) {
-  switch (operator) {
-    case 'Equals':
-      return leftOperand === rightOperand;
-    case 'GreaterThan':
-      return Number(leftOperand) > Number(rightOperand);
-    case 'LessThan':
-      return Number(leftOperand) < Number(rightOperand);
-    case 'Contain':
-      return String(leftOperand).indexOf(String(rightOperand)) > -1;
-    case 'Not Contain':
-      return String(leftOperand).indexOf(String(rightOperand)) === -1;
-    case 'Regex':
-      let regExpResult;
-      try {
-        const regExp = new RegExp(String(rightOperand), 'ig');
-        regExpResult = regExp.test(String(leftOperand));
-      } catch (e) {
-        // pass
-      }
-      return regExpResult;
-    default:
-      return undefined;
+export interface IDataTableRow {
+  [index: string]: string | number | null | object;
+}
+
+export type IDataTable = IDataTableRow[];
+
+export interface IDataColumns {
+  field: string;
+  headerName: string;
+}
+
+export function getDataTableKeys(dataTable: IDataTable) {
+  const conditions = new Set();
+  for (let i = 0; i < dataTable.length; i++) {
+    const currentDataCell = dataTable[i];
+    for (const field of Object.keys(currentDataCell)) {
+      if (!conditions.has(field)) conditions.add(field);
+    }
   }
+  return Array.from(conditions) as string[];
+}
+
+export function getDataTableColumns(dataKeys: string[] = []): IDataColumns[] {
+  return dataKeys.map((key) => ({
+    field: key,
+    headerName: key,
+  }));
 }
 
 export default function getFilteredData(loadedData: IDataTable = [], filterRules: IConditionGroup[]) {

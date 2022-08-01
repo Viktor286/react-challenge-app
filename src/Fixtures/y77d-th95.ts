@@ -1,4 +1,4 @@
-import { IDataTable } from '../Features/dataTable';
+import { IDataTable } from '../Features/DataTable/dataTable';
 
 export const dataTable: IDataTable = [
   {

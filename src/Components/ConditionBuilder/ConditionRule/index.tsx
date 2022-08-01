@@ -1,7 +1,7 @@
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useEffect } from 'react';
 import ConditionRuleLayout from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRule';
 import { ConditionRuleSkeletonSolid } from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRuleSkeleton';
-import createConditionRule, { IConditionRule } from '../../../Features/createConditionRule';
+import createConditionRule, { IConditionRule } from '../../../Features/Condition/conditionRule';
 import { useAppDispatch, useAppSelector } from '../../../Features/Redux/hooks';
 import {
   updateConditionRule,
@@ -9,6 +9,7 @@ import {
   removeConditionRule,
   removeConditionGroup,
 } from '../../../Features/Redux/conditionsSlice';
+import { validateConditionRule } from '../../../Features/Validation/conditionRule';
 
 interface IConditionRuleProp {
   conditionRule: IConditionRule;
@@ -26,6 +27,7 @@ export default function ConditionRule({
   const conditionGroup = useAppSelector((state) => state.conditions.groups[currentConditionGroupIndex]);
 
   const [isItemSkeletonVisible, setIsItemSkeletonVisible] = useState(false);
+  const [validation, setValidation] = useState(validateConditionRule(conditionRule));
   const showItemSkeleton = useCallback(() => setIsItemSkeletonVisible(true), []);
   const hideItemSkeleton = useCallback(() => setIsItemSkeletonVisible(false), []);
 
@@ -73,6 +75,10 @@ export default function ConditionRule({
     [dispatch, hideItemSkeleton, showItemSkeleton, conditionGroup, dataKeys],
   );
 
+  useEffect(() => {
+    setValidation(validateConditionRule(conditionRule));
+  }, [setValidation, conditionRule]);
+
   return (
     <>
       <ConditionRuleLayout
@@ -83,6 +89,7 @@ export default function ConditionRule({
           conditionRule,
           dropdownOptions: dataKeys,
           actions,
+          validation,
         }}
       />
       {isItemSkeletonVisible && <ConditionRuleSkeletonSolid />}

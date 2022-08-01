@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, FormControl, TextField, Typography } from '@mui/material';
+import { Box, FormControl, TextField, Typography, Stack, FormHelperTextProps } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import ConditionRuleDropdown from './ConditionRuleDropdown';
 import { AddConditionRuleButton, RemoveConditionRuleButton } from './ConditionRuleButtons';
-import operatorOptions from '../../../Features/operatorOptions';
-import { IConditionRule } from '../../../Features/createConditionRule';
+import { IConditionRule } from '../../../Features/Condition/conditionRule';
+import operatorOptions from '../../../Features/defaultSettings';
+import { IConditionRuleValidation } from '../../../Features/Validation/conditionRule';
 
 // Styles could be consolidated into theme tokens
 export const conditionRuleHeight = '55px';
@@ -29,19 +30,29 @@ interface IConditionRuleLayoutProps {
   currentConditionGroupIndex: number;
   currentConditionRuleIndex: number;
   actions: any; // TODO: fill
+  validation: IConditionRuleValidation;
 }
+
+const HelperText = ({ children }: FormHelperTextProps) => (
+  <Stack direction="row" spacing={0.5} alignItems="center" sx={{ position: 'absolute', top: '-1.5rem' }}>
+    <Typography component="span" variant="caption" color="error">
+      {children}
+    </Typography>
+  </Stack>
+);
 
 export default React.memo(function ConditionRuleLayout({
   conditionRule = { condition: '', operator: 0, operand: '', id: '' },
-  dropdownOptions,
+  dropdownOptions = [''],
   currentConditionGroupIndex = 0,
   currentConditionRuleIndex = 0,
   actions = {},
+  validation,
 }: IConditionRuleLayoutProps) {
   const { condition, operator, operand, id } = conditionRule;
 
   return (
-    <Box sx={ConditionRuleLayoutSx} data-test-id={`condition-rule-${id}`}>
+    <Box sx={ConditionRuleLayoutSx} data-testid={`condition-rule-${id}`}>
       {currentConditionRuleIndex ? (
         <Typography color="primary" fontWeight="bold" fontSize={20} mx={2}>
           OR
@@ -80,8 +91,12 @@ export default React.memo(function ConditionRuleLayout({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             actions.onOperandChange(e.target.value, currentConditionGroupIndex, currentConditionRuleIndex)
           }
-          data-test-id="input-operand"
-          // error={boolean}
+          data-testid="input-operand"
+          error={!validation.isValid && validation.target === 'operand'}
+          helperText={
+            validation.target === 'operand' && validation.errorMsg.length > 1 ? validation.errorMsg : ''
+          }
+          FormHelperTextProps={{ component: HelperText } as Partial<FormHelperTextProps<'p', {}>>}
         />
       </FormControl>
 

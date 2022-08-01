@@ -1,7 +1,6 @@
-export interface IUrlValidation {
-  isValid: boolean;
-  errorMsg: string;
-}
+import { IValidationInspectionObject } from './InspectionObject';
+
+export interface IUrlValidation extends IValidationInspectionObject {}
 
 export function createInputUrlValidation(isValid: boolean, errorMsg: string) {
   return {
@@ -10,7 +9,7 @@ export function createInputUrlValidation(isValid: boolean, errorMsg: string) {
   };
 }
 
-export function isUrlValid(url: string): IUrlValidation {
+export function validateInputDataTableUrl(url: string): IUrlValidation {
   let errorMsgStack: string[] = [];
   let isValid = true;
 

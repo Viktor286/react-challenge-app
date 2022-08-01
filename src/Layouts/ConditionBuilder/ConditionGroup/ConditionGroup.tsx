@@ -14,7 +14,7 @@ export default function ConditionGroupLayout({
   return (
     <Card
       sx={{ ...flexColumn, gap: 4, padding: 3 }}
-      data-test-id={`condition-group-${currentConditionGroupIndex}`}
+      data-testid={`condition-group-${currentConditionGroupIndex}`}
     >
       {children}
     </Card>

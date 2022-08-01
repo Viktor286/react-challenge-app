@@ -21,7 +21,7 @@ export default function AddConditionGroupLayout({
         variant="outlined"
         startIcon={<Add />}
         onClick={onAddCondition}
-        data-test-id="add-condition-group"
+        data-testid="add-condition-group"
       >
         AND
       </Button>

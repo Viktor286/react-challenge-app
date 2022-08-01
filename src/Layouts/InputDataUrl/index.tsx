@@ -1,18 +1,14 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { IUrlValidation } from '../../Features/isUrlValid';
+import { IUrlValidation } from '../../Features/Validation/inputDataTableUrl';
 
 interface IInputDataUrlLayoutProps {
   url: string;
-  urlValidation: IUrlValidation;
+  validation: IUrlValidation;
   onInputDataChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function InputDataUrlLayout({
-  url,
-  urlValidation,
-  onInputDataChange,
-}: IInputDataUrlLayoutProps) {
+export default function InputDataUrlLayout({ url, validation, onInputDataChange }: IInputDataUrlLayoutProps) {
   return (
     <TextField
       fullWidth
@@ -21,10 +17,10 @@ export default function InputDataUrlLayout({
       placeholder="Json Data Url"
       defaultValue={url}
       disabled={false}
-      error={!urlValidation.isValid}
+      error={!validation.isValid}
       helperText={
-        urlValidation.errorMsg.length > 1
-          ? urlValidation.errorMsg
+        validation.errorMsg.length > 1
+          ? validation.errorMsg
           : 'Insert data url. Returning data MUST be an array json with each element is key/value pair.'
       }
       onChange={onInputDataChange}

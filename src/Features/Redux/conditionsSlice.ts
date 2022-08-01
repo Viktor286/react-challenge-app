@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import createConditionGroup, { IConditionGroup } from '../createConditionGroup';
-import createConditionRule, { IConditionRule } from '../createConditionRule';
+import createConditionGroup, { IConditionGroup } from '../Condition/conditionGroup';
+import createConditionRule, { IConditionRule } from '../Condition/conditionRule';
 
 interface IConditionsState {
   groups: IConditionGroup[];

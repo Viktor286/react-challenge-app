@@ -1,5 +1,5 @@
-import { generateId } from '../utils';
-import createConditionRule, { IConditionRule } from './createConditionRule';
+import { generateId } from '../../utils';
+import createConditionRule, { IConditionRule } from './conditionRule';
 
 export interface IConditionGroup {
   id: string;

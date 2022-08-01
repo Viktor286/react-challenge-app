@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import DataTableLayout from '../../Layouts/DataTable';
 import { useAppDispatch, useAppSelector } from '../../Features/Redux/hooks';
-import getDataTableColumns from '../../Features/getDataTableColumns';
-import { IDataColumns, IDataTableRow } from '../../Features/dataTable';
+import getFilteredData, {
+  getDataTableColumns,
+  IDataColumns,
+  IDataTableRow,
+} from '../../Features/DataTable/dataTable';
 import { setFilteredData } from '../../Features/Redux/dataTableSlice';
-import getFilteredData from '../../Features/getFilteredData';
 
 export default function DataTable() {
   const dispatch = useAppDispatch();

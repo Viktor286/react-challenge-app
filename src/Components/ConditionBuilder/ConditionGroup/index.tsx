@@ -2,7 +2,7 @@ import React from 'react';
 import ConditionRule from '../ConditionRule';
 import ConditionGroupLayout from '../../../Layouts/ConditionBuilder/ConditionGroup/ConditionGroup';
 import { ConditionRuleSkeleton } from '../../../Layouts/ConditionBuilder/ConditionRule/ConditionRuleSkeleton';
-import { IConditionGroup } from '../../../Features/createConditionGroup';
+import { IConditionGroup } from '../../../Features/Condition/conditionGroup';
 
 interface IConditionGroupProps {
   conditionGroup: IConditionGroup;

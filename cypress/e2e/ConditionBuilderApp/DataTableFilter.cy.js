@@ -4,16 +4,16 @@ describe('DataTable Filter', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.intercept('GET', defaultDataUrl, { fixture: 'y77d-th95.json' }).as('getTableData');
-    cy.wait('@getTableData').its('response.body').should('have.length', 5);
+    cy.wait('@getTableData', { timeout: 10000 }).its('response.body').should('have.length', 5);
   });
 
-  const addConditionGroupBtn = 'button[data-test-id^="add-condition-group"]';
+  const addConditionGroupBtn = 'button[data-testid^="add-condition-group"]';
   const dataTableAllCellsId = '.MuiDataGrid-cell[data-field="id"]';
-  const addConditionRuleBtn = 'button[data-test-id^="add-condition-rule"]';
-  const removeConditionRuleBtn = 'button[data-test-id^="remove-condition-rule"]';
-  const selectOperator = 'div[data-test-id^="select-operator"]';
-  const selectCondition = 'div[data-test-id^="select-left-condition"]';
-  const inputOperand = 'div[data-test-id^="input-operand"]';
+  const addConditionRuleBtn = 'button[data-testid^="add-condition-rule"]';
+  const removeConditionRuleBtn = 'button[data-testid^="remove-condition-rule"]';
+  const selectOperator = 'div[data-testid^="select-operator"]';
+  const selectCondition = 'div[data-testid^="select-left-condition"]';
+  const inputOperand = 'div[data-testid^="input-operand"]';
 
   const referDropDownName = (name) => {
     return `ul > li[data-value="${name}"]`;

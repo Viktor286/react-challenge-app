@@ -4,15 +4,18 @@ import debounce from 'lodash.debounce';
 import InputDataUrlLayout from '../../Layouts/InputDataUrl';
 import { useAppDispatch } from '../../Features/Redux/hooks';
 import { setDataTable, setIsLoading } from '../../Features/Redux/dataTableSlice';
-import getDataTableKeys from '../../Features/getDataTableKeys';
 import { resetConditionGroups } from '../../Features/Redux/conditionsSlice';
-import { createInputUrlValidation, isUrlValid } from '../../Features/isUrlValid';
+import {
+  createInputUrlValidation,
+  validateInputDataTableUrl,
+} from '../../Features/Validation/inputDataTableUrl';
 import { defaultDataUrl } from '../../Features/defaultSettings';
+import { getDataTableKeys } from '../../Features/DataTable/dataTable';
 
 export default function InputDataUrl() {
   const dispatch = useAppDispatch();
   const [url, setUrl] = useState(defaultDataUrl);
-  const [validation, setValidation] = useState(isUrlValid(url));
+  const [validation, setValidation] = useState(validateInputDataTableUrl(url));
 
   const { isValid: isInputUrlValid } = validation;
 
@@ -20,7 +23,7 @@ export default function InputDataUrl() {
     () =>
       debounce((e: React.ChangeEvent<HTMLInputElement>): void => {
         setUrl(e.target.value);
-        setValidation(isUrlValid(e.target.value));
+        setValidation(validateInputDataTableUrl(e.target.value));
       }, 500),
     [],
   );
@@ -53,13 +56,14 @@ export default function InputDataUrl() {
         } else {
           const { error, message } = resultDataTable;
           if (error) {
-            setValidation(createInputUrlValidation(!error, `Request error: ${message}`));
+            setValidation(createInputUrlValidation(!error, `Response error: ${message}`));
           } else {
             setValidation(createInputUrlValidation(false, 'Something went wrong'));
           }
         }
       } catch (e) {
         setValidation(createInputUrlValidation(false, 'There was an error on request'));
+        dispatch(setIsLoading({ isLoading: false }));
       }
     };
 
@@ -72,5 +76,5 @@ export default function InputDataUrl() {
     };
   }, [isInputUrlValid, url, dispatch]);
 
-  return <InputDataUrlLayout url={url} urlValidation={validation} onInputDataChange={onInputDataChange} />;
+  return <InputDataUrlLayout url={url} validation={validation} onInputDataChange={onInputDataChange} />;
 }

@@ -4,18 +4,18 @@ describe('Condition Builder', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.intercept('GET', defaultDataUrl, { fixture: 'y77d-th95.json' }).as('getTableData');
-    cy.wait('@getTableData', { timeout: 5000 }).its('response.body').should('have.length', 5);
+    cy.wait('@getTableData', { timeout: 10000 }).its('response.body').should('have.length', 5);
   });
 
-  const conditionGroup = 'div[data-test-id^="condition-group-"]';
-  const addConditionGroupBtn = 'button[data-test-id^="add-condition-group"]';
+  const conditionGroup = 'div[data-testid^="condition-group-"]';
+  const addConditionGroupBtn = 'button[data-testid^="add-condition-group"]';
 
-  const conditionRule = 'div[data-test-id^="condition-rule-"]';
-  const selectOperator = 'div[data-test-id^="select-operator"]';
-  const selectCondition = 'div[data-test-id^="select-left-condition"]';
-  const inputOperand = 'div[data-test-id^="input-operand"]';
-  const removeConditionRuleBtn = 'button[data-test-id^="remove-condition-rule"]';
-  const addConditionRuleBtn = 'button[data-test-id^="add-condition-rule"]';
+  const conditionRule = 'div[data-testid^="condition-rule-"]';
+  const selectOperator = 'div[data-testid^="select-operator"]';
+  const selectCondition = 'div[data-testid^="select-left-condition"]';
+  const inputOperand = 'div[data-testid^="input-operand"]';
+  const removeConditionRuleBtn = 'button[data-testid^="remove-condition-rule"]';
+  const addConditionRuleBtn = 'button[data-testid^="add-condition-rule"]';
 
   it('should load one initial condition rule in one condition group', () => {
     cy.get(conditionRule)
@@ -43,9 +43,9 @@ describe('Condition Builder', () => {
     cy.get(conditionRule)
       .should('have.length', 2)
       .last()
-      .invoke('data', 'test-id')
+      .invoke('data', 'testid')
       .then((testId) => {
-        const lastConditionRule = `div[data-test-id^="${testId}"]`;
+        const lastConditionRule = `div[data-testid^="${testId}"]`;
 
         cy.get(`${lastConditionRule} ${selectCondition}`).click().get('ul > li[data-value="id"]').click();
         cy.get(`${lastConditionRule} ${selectCondition}`).should('contain.text', 'id');
@@ -75,9 +75,9 @@ describe('Condition Builder', () => {
     cy.get(conditionGroup)
       .should('have.length', 2)
       .last()
-      .invoke('data', 'test-id')
+      .invoke('data', 'testid')
       .then((testId) => {
-        const innerConditionRule = `div[data-test-id^="${testId}"] ${conditionRule}`;
+        const innerConditionRule = `div[data-testid^="${testId}"] ${conditionRule}`;
 
         cy.get(`${innerConditionRule} ${selectCondition}`).click().get('ul > li[data-value="id"]').click();
         cy.get(`${innerConditionRule} ${selectCondition}`).should('contain.text', 'id');

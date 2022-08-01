@@ -3,7 +3,7 @@ import { Box, Chip, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import DataTableSkeleton from './DataTableSkeleton';
 import { flexColumn } from '../utils';
-import { IDataColumns, IDataTableRow } from '../../Features/dataTable';
+import { IDataColumns, IDataTableRow } from '../../Features/DataTable/dataTable';
 
 interface IDataTableLayoutProps {
   loading: boolean;
@@ -21,7 +21,7 @@ export default function DataTableLayout({
   columns = [],
 }: IDataTableLayoutProps) {
   return (
-    <Box sx={{ ...flexColumn, minHeight: '550px', mt: 4 }} data-test-id="data-table">
+    <Box sx={{ ...flexColumn, minHeight: '550px', mt: 4 }} data-testid="data-table">
       <Typography variant="h5" fontWeight="bold">
         Results
       </Typography>

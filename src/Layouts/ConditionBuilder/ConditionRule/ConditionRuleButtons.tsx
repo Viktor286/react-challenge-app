@@ -18,7 +18,7 @@ export function AddConditionRuleButton({
       color="primary"
       aria-label="Add condition rule"
       {...{ onMouseEnter, onMouseLeave, onClick }}
-      data-test-id="add-condition-rule"
+      data-testid="add-condition-rule"
     >
       <Add />
     </IconButton>
@@ -36,7 +36,7 @@ export function RemoveConditionRuleButton({ onClick }: IRemoveConditionRuleButto
       color="warning"
       aria-label="Remove condition rule"
       onClick={onClick}
-      data-test-id="remove-condition-rule"
+      data-testid="remove-condition-rule"
     >
       <Delete />
     </IconButton>

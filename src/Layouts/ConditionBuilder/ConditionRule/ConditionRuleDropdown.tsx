@@ -26,7 +26,7 @@ export default function ConditionRuleDropdownLayout({
         label={label}
         value={selectedValue}
         onChange={onSelect}
-        data-test-id={`select-${labelId}`}
+        data-testid={`select-${labelId}`}
       >
         {dropdownOptions.map((optionText) => (
           <MenuItem key={`key-${optionText}`} value={optionText}>
