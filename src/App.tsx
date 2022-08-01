@@ -14,8 +14,9 @@ function App() {
   const dispatch = useAppDispatch();
 
   batch(() => {
-    dispatch(setDataTable(dataTable));
-    dispatch(resetConditionGroups(getDataTableKeys(dataTable)));
+    const dataTableKeys = getDataTableKeys(dataTable);
+    dispatch(resetConditionGroups({ conditionOptions: dataTableKeys }));
+    dispatch(setDataTable({ dataTable, dataTableKeys }));
   });
 
   useEffect(() => {

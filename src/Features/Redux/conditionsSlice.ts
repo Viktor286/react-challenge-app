@@ -26,12 +26,11 @@ export const conditionsSlice = createSlice({
   initialState: initialState as IConditionsState,
 
   reducers: {
-    resetConditionGroups: (state, { payload: conditionOptions }) => {
+    resetConditionGroups: (state, { payload: { conditionOptions } }) => {
       state.groups = [createConditionGroup(conditionOptions)];
     },
 
-    addConditionGroup: (state, { payload: conditionOptions }) => {
-      console.log('addConditionGroup with ', conditionOptions);
+    addConditionGroup: (state, { payload: { conditionOptions } }) => {
       state.groups.push(createConditionGroup(conditionOptions));
     },
 

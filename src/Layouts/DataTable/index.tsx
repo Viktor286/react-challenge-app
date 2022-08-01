@@ -21,7 +21,7 @@ export default function DataTableLayout({
   columns = [],
 }: IDataTableLayoutProps) {
   return (
-    <Box sx={{ ...flexColumn, minHeight: '500px', mt: 4 }}>
+    <Box sx={{ ...flexColumn, minHeight: '500px', mt: 4 }} data-test-id="data-table">
       <Typography variant="h5" fontWeight="bold">
         Results
       </Typography>

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import getDataTableKeys from '../getDataTableKeys';
 
 interface IDataTableState {
   loadedData: [];
@@ -21,18 +20,19 @@ export const dataTableSlice = createSlice({
   initialState: initialState as IDataTableState,
 
   reducers: {
-    setDataTable: (state, { payload: newLoadedData }) => {
+    setDataTable: (state, { payload: { dataTable: newLoadedData, dataTableKeys } }) => {
       state.loadedData = newLoadedData;
-
       state.filteredData = newLoadedData;
-
-      state.dataKeys = getDataTableKeys(newLoadedData);
-
+      state.dataKeys = dataTableKeys;
       state.isLoading = false;
+    },
+
+    setFilteredData: (state, { payload: { filteredData } }) => {
+      state.filteredData = filteredData;
     },
   },
 });
 
-export const { setDataTable } = dataTableSlice.actions;
+export const { setDataTable, setFilteredData } = dataTableSlice.actions;
 
 export default dataTableSlice.reducer;

@@ -9,7 +9,7 @@ export default function ConditionBuilder() {
   const dispatch = useAppDispatch();
   const conditions = useAppSelector((state) => state.conditions);
   const { dataKeys, isLoading } = useAppSelector((state) => state.dataTable);
-  console.log('conditions', conditions);
+
   const onAddConditionGroup = () => {
     dispatch(addConditionGroup({ conditionOptions: dataKeys }));
   };
@@ -26,7 +26,12 @@ export default function ConditionBuilder() {
           />
         </React.Fragment>
       ))}
-      <AddConditionGroupLayout withBar={conditions.groups.length > 0} onAddCondition={onAddConditionGroup} />
+      {!isLoading && (
+        <AddConditionGroupLayout
+          withBar={conditions.groups.length > 0}
+          onAddCondition={onAddConditionGroup}
+        />
+      )}
     </>
   );
 }
