@@ -4,7 +4,7 @@ describe('Condition Builder', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.intercept('GET', defaultDataUrl, { fixture: 'y77d-th95.json' }).as('getTableData');
-    cy.wait('@getTableData').its('response.body').should('have.length', 5);
+    cy.wait('@getTableData', { timeout: 5000 }).its('response.body').should('have.length', 5);
   });
 
   const conditionGroup = 'div[data-test-id^="condition-group-"]';
