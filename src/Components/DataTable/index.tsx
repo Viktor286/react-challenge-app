@@ -26,7 +26,5 @@ export default function DataTable() {
     totalRows = loadedData.length;
   }
 
-  console.log('filteredData', filteredData);
-
   return <DataTableLayout loading={isLoading} rows={rows} columns={columns} totalRows={totalRows} />;
 }

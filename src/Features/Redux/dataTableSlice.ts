@@ -30,9 +30,13 @@ export const dataTableSlice = createSlice({
     setFilteredData: (state, { payload: { filteredData } }) => {
       state.filteredData = filteredData;
     },
+
+    setIsLoading: (state, { payload: { isLoading } }) => {
+      state.isLoading = isLoading;
+    },
   },
 });
 
-export const { setDataTable, setFilteredData } = dataTableSlice.actions;
+export const { setDataTable, setFilteredData, setIsLoading } = dataTableSlice.actions;
 
 export default dataTableSlice.reducer;

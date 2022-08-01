@@ -59,7 +59,7 @@ export default function getFilteredData(loadedData: IDataTable = [], filterRules
         return conditionDecision !== undefined ? conditionDecision : true;
       }
     });
-    console.log('groupsDecision', groupsDecision);
+
     return groupsDecision.every((e) => e);
   });
 }

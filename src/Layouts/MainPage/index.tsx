@@ -12,7 +12,10 @@ export default function MainPageLayout({ children }: IMainPageLayoutProps) {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="lg" sx={{ ...flexColumn, mt: 2, mb: 2 }}>
+      <Container
+        maxWidth="lg"
+        sx={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif', ...flexColumn, mt: 2, mb: 2 }}
+      >
         <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
           Condition Builder
         </Typography>
