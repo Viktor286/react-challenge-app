@@ -1,4 +1,9 @@
-# Project structure
+# Quick React-based challenge project
+Complex React UI application with redux, MUI.
+Behavorial tests with testing-library, 2e2 tests with Cypress.
+
+
+## Project structure
 
 React stateful/controller components -- located at `src/Components/`
 
@@ -26,16 +31,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-<img width="799" alt="image" src="https://user-images.githubusercontent.com/13506547/182191291-c062ac7b-b82d-4acf-a6d8-f8e2a4195a5a.png">
-
-
 ### `npm run e2e:run`
 Runs the e2e Cypress test suite \
 For more e2e running modes please refer to `package.json`
-
-
-<img width="798" alt="image" src="https://user-images.githubusercontent.com/13506547/182191199-5244e1ef-ffe5-4ded-8383-483229c680c5.png">
-
-
 
 
